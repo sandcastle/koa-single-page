@@ -1,0 +1,9 @@
+// {
+//     "extends": "airbnb-base",
+//     "rules": {
+//       "comma-dangle": "off",
+//       "no-console": "off",
+//       "padded-blocks": "off",
+//       "no-bitwise": "off"
+//     }
+// }

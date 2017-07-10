@@ -1,0 +1,42 @@
+syntax: glob
+
+*.log
+
+# webstorm
+# OS
+.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Process
+pids
+*.pid
+*.seed
+
+# IDE
+.idea/
+*.swp
+
+# Packages
+node_modules
+
+# Coverage
+coverage
+lib-cov
+
+# Webpack
+dist
+/src/*/__build__/
+.webpack.json
+
+# folders
+node_modules/
+dist/
+
+# vs code
+.vscode/.browse*
