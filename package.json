@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node index.js",
     "clean": "rm -rf dist/",
-    "build": "",
+    "": "",
     "test": "jest",
     "test:cci": "jest --testResultsProcessor ./node_modules/jest-junit"
   },

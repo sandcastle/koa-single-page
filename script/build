@@ -12,10 +12,14 @@ echo "Building ..."
 sh script/clean
 
 mkdir dist
-cp src/ dist/
+cp -Rf src/ dist/src
+cp index.js dist/index.js
 cp package.json dist/package.json
-cp yarn.lock dist/package.json
+cp yarn.lock dist/yarn.lock
 
+cd dist
+yarn --prod
+cd ..
 
 echo "Build complete!"
 
