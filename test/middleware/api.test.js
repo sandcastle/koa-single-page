@@ -8,7 +8,7 @@ describe('middleware : api', () => {
 
   beforeAll(() => {
 
-    let apiServer = new Koa();
+    const apiServer = new Koa();
     apiServer.use(async (ctx) => {
       ctx.response.type = 'application/json';
       ctx.response.body = '{ "success": true }';
@@ -17,7 +17,7 @@ describe('middleware : api', () => {
 
     process.env.API_URL = 'http://localhost:9998';
 
-    let appServer = new Koa();
+    const appServer = new Koa();
     appServer.use(require('../../src/middleware/api'));
     app = appServer.listen(9999, 'localhost');
   });

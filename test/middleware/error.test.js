@@ -7,12 +7,12 @@ describe('middleware : error', () => {
   let app;
 
   beforeAll(() => {
-    let server = new Koa();
+    const server = new Koa();
     server.use(require('../../src/middleware/error'));
     server.use(async (ctx) => {
-      if(ctx.path == '/400') return ctx.setError(boom.badRequest('Straight boom'));
-      if(ctx.path == '/throw') throw new Error('bad things');
-      if(ctx.path == '/ctx-throw') ctx.throw(501, 'not implemented');
+      if (ctx.path == '/400') return ctx.setError(boom.badRequest('Straight boom'));
+      if (ctx.path == '/throw') throw new Error('bad things');
+      if (ctx.path == '/ctx-throw') ctx.throw(501, 'not implemented');
     });
     app = server.listen(9999, 'localhost');
   });

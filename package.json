@@ -4,15 +4,15 @@
   "description": "A koa 2 server for hosting a SPA application.",
   "private": true,
   "main": "index.js",
+  "author": "sandcastle",
+  "license": "MIT",
   "scripts": {
     "start": "node index.js",
     "clean": "rm -rf dist/",
-    "": "",
+    "lint": "eslint './{src,test}/**/*.js' --fix",
     "test": "jest",
     "test:cci": "jest --testResultsProcessor ./node_modules/jest-junit"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "boom": "^5.1.0",
     "dotenv": "^4.0.0",

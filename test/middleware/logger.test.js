@@ -6,9 +6,9 @@ describe('middleware : logger', () => {
   let app;
 
   beforeAll(() => {
-    let server = new Koa();
+    const server = new Koa();
     server.use(require('../../src/middleware/logger'));
-    server.use(async (ctx) => ctx.response.body = 'all good!');
+    server.use(async ctx => ctx.response.body = 'all good!');
     app = server.listen(9999, 'localhost');
   });
 
@@ -23,8 +23,7 @@ describe('middleware : logger', () => {
         .get('/ping');
       expect(response.statusCode).toBe(200);
       expect(console.log.mock.calls.length).toBe(2);
-    }
-    finally {
+    } finally {
       console.log.mockRestore();
     }
   });

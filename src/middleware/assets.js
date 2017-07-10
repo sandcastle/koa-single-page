@@ -42,4 +42,4 @@ module.exports = async (ctx, next) => {
   }
 
   await send(ctx, ctx.path);
-}
+};

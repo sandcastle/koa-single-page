@@ -10,10 +10,10 @@ describe('middleware : spa', () => {
   beforeAll(() => {
     config.useTestFiles();
 
-    let server = new Koa();
+    const server = new Koa();
     server.use(require('../../src/middleware/error'));
     server.use(require('../../src/middleware/spa'));
-    server.use(async (ctx) => ctx.response.body = 'wrong');
+    server.use(async ctx => ctx.response.body = 'wrong');
     app = server.listen(9999, 'localhost');
   });
 
