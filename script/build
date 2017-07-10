@@ -1,0 +1,22 @@
+#!/bin/sh
+set -e
+
+# ------
+
+cd "$(dirname "$0")/.."
+
+# ------
+
+echo "Building ..."
+
+sh script/clean
+
+mkdir dist
+cp src/ dist/
+cp package.json dist/package.json
+cp yarn.lock dist/package.json
+
+
+echo "Build complete!"
+
+# ------

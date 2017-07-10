@@ -28,6 +28,7 @@ node_modules
 # Coverage
 coverage
 lib-cov
+junit.xml
 
 # Webpack
 dist
