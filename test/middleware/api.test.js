@@ -1,5 +1,6 @@
 const request = require('supertest');
 const Koa = require('koa');
+const proxy = require('../../src/middleware/api');
 
 describe('middleware : api', () => {
 
@@ -7,9 +8,8 @@ describe('middleware : api', () => {
   let api;
 
   beforeAll(() => {
-
     const apiServer = new Koa();
-    apiServer.use(async (ctx) => {
+    apiServer.use(async function (ctx) {
       ctx.response.type = 'application/json';
       ctx.response.body = '{ "success": true }';
     });
@@ -18,7 +18,7 @@ describe('middleware : api', () => {
     process.env.API_URL = 'http://localhost:9998';
 
     const appServer = new Koa();
-    appServer.use(require('../../src/middleware/api'));
+    appServer.use(proxy());
     app = appServer.listen(9999, 'localhost');
   });
 

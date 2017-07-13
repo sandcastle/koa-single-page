@@ -1,9 +1,9 @@
-const server = require('./server');
-const conf = require('./config');
+const app = require('./server');
+const config = require('./config');
 
 console.log('App Server');
-console.log(`  Host : ${conf.host}`);
-console.log(`  Port : ${conf.port}`);
-console.log(`  API  : ${conf.api}`);
+console.log(`  Host : ${config.host}`);
+console.log(`  Port : ${config.port}`);
+console.log(`  API  : ${config.api}`);
 
-app.listen(conf.port, conf.host);
+app.listen(config.port, config.host);

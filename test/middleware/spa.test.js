@@ -2,6 +2,8 @@ const request = require('supertest');
 const Koa = require('koa');
 const mime = require('../../src/helpers/mime');
 const config = require('../../src/config');
+const error = require('../../src/middleware/error');
+const spa = require('../../src/middleware/spa');
 
 describe('middleware : spa', () => {
 
@@ -11,9 +13,11 @@ describe('middleware : spa', () => {
     config.useTestFiles();
 
     const server = new Koa();
-    server.use(require('../../src/middleware/error'));
-    server.use(require('../../src/middleware/spa'));
-    server.use(async ctx => ctx.response.body = 'wrong');
+    server.use(error());
+    server.use(spa());
+    server.use(async (ctx) => {
+      ctx.response.body = 'wrong';
+    });
     app = server.listen(9999, 'localhost');
   });
 

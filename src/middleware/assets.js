@@ -5,7 +5,7 @@ const debug = require('../helpers/debug');
 const RULES = {
   index: '/index.html',
   root: '/',
-  allowedVerbs: ['GET'],
+  allowedVerbs: ['GET']
 };
 
 function isNotStaticFile(ctx) {
@@ -20,11 +20,12 @@ function isInvalidVerb(ctx) {
   return !RULES.allowedVerbs.some(x => x === ctx.method.toUpperCase());
 }
 
-module.exports = async (ctx, next) => {
+async function assets(ctx, next) {
 
   if (isNotStaticFile(ctx)) {
     debug.log(ctx, 'assets : not static file');
-    return await next();
+    await next();
+    return;
   }
 
   if (isIndexPath(ctx)) {
@@ -42,4 +43,6 @@ module.exports = async (ctx, next) => {
   }
 
   await send(ctx, ctx.path);
-};
+}
+
+module.exports = () => assets;

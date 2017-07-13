@@ -12,14 +12,14 @@ const assets = require('./middleware/assets');
 const routes = require('./routes');
 
 const app = new Koa();
-app.use(error);
-app.use(logger);
+app.use(error());
+app.use(logger());
 app.use(compress());
-app.use(api);
+app.use(api());
 app.use(routes);
 app.use(conditional());
 app.use(etag());
-app.use(spa);
-app.use(assets);
+app.use(spa());
+app.use(assets());
 
 module.exports = app;

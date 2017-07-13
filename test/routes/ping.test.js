@@ -1,8 +1,6 @@
 const request = require('supertest');
 const server = require('../server');
 
-const clock = '../../mocks/clock';
-
 // 2017-07-09T05:34:52.259Z
 const RegexIso8601 = /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(([+-]\d\d:\d\d)|Z)?$/i;
 

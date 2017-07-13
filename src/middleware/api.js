@@ -1,12 +1,7 @@
-const compose = require('koa-compose');
-const proxy = require('koa-proxies');
-const conf = require('../config');
+const proxy = require('koa-proxy');
+const config = require('../config');
 
-const api = proxy('/api', {
-  changeOrigin: true,
-  target: conf.api,
-  logs: true
+module.exports = () => proxy({
+  host: config.api,
+  match: /^\/api\//
 });
-
-module.exports = api;
-

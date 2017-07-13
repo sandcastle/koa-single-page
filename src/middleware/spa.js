@@ -37,10 +37,11 @@ function acceptsHtml(headers) {
       && (headers.accept.indexOf('text/html') !== -1 || headers.accept.indexOf('*/*') !== -1);
 }
 
-module.exports = async (ctx, next) => {
+async function spa(ctx, next) {
 
   if (isStaticFile(ctx)) {
-    return await next();
+    await next();
+    return;
   }
 
   if (isInvalidVerb(ctx)) {
@@ -58,7 +59,8 @@ module.exports = async (ctx, next) => {
 
   if (!acceptsHtml(ctx.headers)) {
     debug.log(ctx, 'spa : does not accept html');
-    return await next();
+    await next();
+    return;
   }
 
   if (shouldRedirectWithoutSlash(ctx)) {
@@ -76,4 +78,6 @@ module.exports = async (ctx, next) => {
   }
 
   await send(ctx, RULES.index);
-};
+}
+
+module.exports = () => spa;

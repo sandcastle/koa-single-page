@@ -1,6 +1,7 @@
 const request = require('supertest');
 const Koa = require('koa');
 const boom = require('boom');
+const error = require('../../src/middleware/error');
 
 describe('middleware : error', () => {
 
@@ -8,11 +9,18 @@ describe('middleware : error', () => {
 
   beforeAll(() => {
     const server = new Koa();
-    server.use(require('../../src/middleware/error'));
+    server.use(error());
     server.use(async (ctx) => {
-      if (ctx.path == '/400') return ctx.setError(boom.badRequest('Straight boom'));
-      if (ctx.path == '/throw') throw new Error('bad things');
-      if (ctx.path == '/ctx-throw') ctx.throw(501, 'not implemented');
+      if (ctx.path === '/400') {
+        ctx.setError(boom.badRequest('Straight boom'));
+        return;
+      }
+      if (ctx.path === '/throw') {
+        throw new Error('bad things');
+      }
+      if (ctx.path === '/ctx-throw') {
+        ctx.throw(501, 'not implemented');
+      }
     });
     app = server.listen(9999, 'localhost');
   });

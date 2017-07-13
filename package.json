@@ -1,5 +1,5 @@
 {
-  "name": "koa-spa",
+  "name": "koa-single-page",
   "version": "1.0.0",
   "description": "A koa 2 server for hosting a SPA application.",
   "private": true,
@@ -22,7 +22,7 @@
     "koa-compress": "^2.0.0",
     "koa-conditional-get": "^2.0.0",
     "koa-etag": "^3.0.0",
-    "koa-proxies": "^0.3.0",
+    "koa-proxy": "^0.8.0",
     "koa-router": "^7.2.1",
     "moment": "^2.18.1",
     "resolve-path": "^1.3.3"

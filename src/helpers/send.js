@@ -1,10 +1,8 @@
 const path = require('path');
 const fs = require('fs');
-const mime = require('mime');
 const boom = require('boom');
 const resolvePath = require('resolve-path');
 const config = require('../config');
-const debug = require('../helpers/debug');
 
 /**
  * https://github.com/ktmud/koa-spa
@@ -14,38 +12,49 @@ const debug = require('../helpers/debug');
 
 const NOT_FOUND_IO = ['ENOENT', 'ENAMETOOLONG', 'ENOTDIR'];
 const ONE_DAY = 24 * 60 * 60;
-const RULES = {
-  notFound: '/not-found.html',
-  cacheRules: [
-    { matcher: /\.html$/i, duration: ONE_DAY },
-    { matcher: /\.(js|json)$/i, duration: ONE_DAY },
-    { matcher: /\.(gif|png|jpe?g|svg)$/i, duration: ONE_DAY },
-    { matcher: /\.css$/i, duration: ONE_DAY },
-    { matcher: /\.(eot|ttf|woff|woff2)$/i, duration: ONE_DAY }
-  ],
-  cacheDefault: ONE_DAY
-};
 
-function stat(path) {
+// const RULES = {
+//   notFound: '/not-found.html',
+//   cacheRules: [
+//     { matcher: /\.html$/i, duration: ONE_DAY },
+//     { matcher: /\.(js|json)$/i, duration: ONE_DAY },
+//     { matcher: /\.(gif|png|jpe?g|svg)$/i, duration: ONE_DAY },
+//     { matcher: /\.css$/i, duration: ONE_DAY },
+//     { matcher: /\.(eot|ttf|woff|woff2)$/i, duration: ONE_DAY }
+//   ],
+//   cacheDefault: ONE_DAY
+// };
+
+function existsAsync(filePath) {
+  return new Promise((resolve) => {
+    fs.exists(filePath, resolve);
+  });
+}
+
+function stat(filePath) {
   return new Promise((resolve, reject) => {
-    fs.stat(path, (err, data) => {
-      if (err) return reject(err);
+    fs.stat(filePath, (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
       resolve(data);
     });
   });
 }
 
-function decodePath(path) {
+function decodePath(p) {
   try {
-    return decodeURIComponent(path);
-  } catch (err) {
+    return decodeURIComponent(p);
+  }
+  catch (err) {
     return -1;
   }
 }
 
-function isHidden(root, path) {
-  path = path.substr(root.length).split(path.sep);
-  return (path.indexOf('.') !== -1);
+function isHidden(root, relativePath) {
+  relativePath = relativePath.substr(root.length).split(path.sep);
+  return (relativePath.indexOf('.') !== -1);
 }
 
 const send = async (ctx, relativePath) => {
@@ -54,7 +63,8 @@ const send = async (ctx, relativePath) => {
 
   relativePath = decodePath(relativePath);
   if (path === -1) {
-    return ctx.throw(400, 'Invalid path encoding');
+    ctx.throw(400, 'Invalid path encoding');
+    return;
   }
 
   if (relativePath.length > 1 && relativePath[0] === '/') {
@@ -67,11 +77,12 @@ const send = async (ctx, relativePath) => {
     return;
   }
 
-  if (ctx.acceptsEncodings('br', 'deflate', 'identity') === 'br' && (await fs.exists(`${filePath}.br`))) {
+  if (ctx.acceptsEncodings('br', 'identity') === 'br' && (await existsAsync(`${filePath}.br`))) {
     filePath += '.br';
     ctx.set('Content-Encoding', 'br');
     ctx.res.removeHeader('Content-Length');
-  } else if (ctx.acceptsEncodings('gzip', 'deflate', 'identity') === 'gzip' && (await fs.exists(`${filePath}.gz`))) {
+  }
+  else if (ctx.acceptsEncodings('gzip', 'identity') === 'gzip' && (await existsAsync(`${filePath}.gz`))) {
     filePath += '.gz';
     ctx.set('Content-Encoding', 'gzip');
     ctx.res.removeHeader('Content-Length');
@@ -80,7 +91,8 @@ const send = async (ctx, relativePath) => {
   let stats;
   try {
     stats = await stat(filePath);
-  } catch (err) {
+  }
+  catch (err) {
     if (~NOT_FOUND_IO.indexOf(err.code)) {
       return;
     }

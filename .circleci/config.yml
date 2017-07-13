@@ -17,9 +17,9 @@ jobs:
           name: Dependencies
           command: sh script/setup
 
-      #- run:
-      #    name: Lint
-      #    command: sh script/lint
+      - run:
+         name: Lint
+         command: sh script/lint
 
       - run:
           name: Test
