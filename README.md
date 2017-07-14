@@ -1,6 +1,6 @@
 # koa-single-page [![CircleCI](https://circleci.com/gh/sandcastle/koa-single-page/tree/master.svg?style=svg)](https://circleci.com/gh/sandcastle/koa-single-page/tree/master)
 
-> A koa 2 server for hosting a SPA applications
+> A koa 2 server for hosting a SPA application
 
 
 ## Getting Started
@@ -21,3 +21,12 @@ The below helper scripts are available for convenience:
 - `script/build` - build the application
 - `script/test` - run all the integration tests
 - `script/package` - packages the app as a docker container (must be run after `script/build`)
+
+
+## Enjoy!
+
+```
+  😉
+  |=🍦
+ / \
+```
