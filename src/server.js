@@ -20,6 +20,32 @@ app.use(routes);
 app.use(conditional());
 app.use(etag());
 app.use(spa());
+if (isDevelopment()) {
+  app.use(dev());
+}
 app.use(assets());
+
+function dev() {
+  /* eslint-disable global-require */
+  const webpack = require('webpack');
+  const { devMiddleware } = require('koa-webpack-middleware');
+  const compile = webpack(require('../config/webpack.dev'));
+  return devMiddleware(compile, {
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
+    },
+    index: 'index.html',
+    publicPath: '/',
+    stats: {
+      colors: true
+    }
+  });
+}
+
+function isDevelopment() {
+  const DEV = 'development';
+  return (process.env.NODE_ENV || DEV) === DEV;
+}
 
 module.exports = app;
