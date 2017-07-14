@@ -77,7 +77,9 @@ async function spa(ctx, next) {
     return;
   }
 
-  await send(ctx, RULES.index);
+  ctx.path = RULES.index;
+
+  await next();
 }
 
 module.exports = () => spa;
