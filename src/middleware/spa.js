@@ -1,5 +1,4 @@
 const boom = require('boom');
-const send = require('../helpers/send');
 const debug = require('../helpers/debug');
 
 const RULES = {
