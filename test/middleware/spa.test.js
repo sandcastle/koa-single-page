@@ -5,7 +5,7 @@ const config = require('../../src/config');
 const error = require('../../src/middleware/error');
 const spa = require('../../src/middleware/spa');
 
-describe('middleware : spa', () => {
+describe.only('middleware : spa', () => {
 
   let app;
 
@@ -15,6 +15,13 @@ describe('middleware : spa', () => {
     const server = new Koa();
     server.use(error());
     server.use(spa());
+    server.use(async (ctx, next) => {
+      if (/^\/index\.html$/.test(ctx.path)) {
+        ctx.body = 'index file';
+        return;
+      }
+      await next();
+    });
     server.use(async (ctx) => {
       ctx.response.body = 'wrong';
     });

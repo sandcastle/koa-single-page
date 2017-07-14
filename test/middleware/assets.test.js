@@ -33,4 +33,12 @@ describe('middleware : error', () => {
     expect(response.text).toBe('wrong');
   });
 
+  test('should return static css file', async () => {
+    const response = await request(app)
+      .get('/app.css')
+      .set('Accept', mime.css);
+    expect(response.statusCode).toBe(200);
+    expect(response.text.indexOf('.cow { color: red; }')).toBeGreaterThan(-1);
+  });
+
 });
