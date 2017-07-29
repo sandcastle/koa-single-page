@@ -49,3 +49,12 @@ jobs:
 
       - store_test_results:
           path: junit.xml
+
+      - deploy:
+          name: Deploy
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              docker login -u $DOCKER_USER -p $DOCKER_PASS
+              sh script/package
+              sh script/publish
+            fi
