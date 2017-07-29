@@ -1,0 +1,27 @@
+#!/bin/sh
+set -e
+
+# ------
+
+cd "$(dirname "$0")/.."
+
+# ------
+
+echo "Publishing..."
+
+TAG=$(date +%Y%m%dT%H%M)-$(git rev-parse --short HEAD)
+echo "  - Tag: ${TAG}"
+
+# login (if required)
+# docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+# tag container
+docker tag koa-single-page sandcastle/koa-single-page:latest
+docker tag koa-single-page sandcastle/koa-single-page:$TAG
+
+# push to docker
+docker push sandcastle/koa-single-page
+
+echo "Publishing complete!"
+
+# ------
