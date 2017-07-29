@@ -3,7 +3,7 @@ const Config = {
   root: '../../dist',
 
   get host() {
-    return process.env.HOST || 'localhost';
+    return process.env.HOST || '0.0.0.0';
   },
 
   get port() {
