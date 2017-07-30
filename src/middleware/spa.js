@@ -38,7 +38,7 @@ function acceptsHtml(headers) {
 
 async function spa(ctx, next) {
 
-  if (isStaticFile(ctx)) {
+  if (isStaticFile(ctx) && !isIndexPath(ctx)) {
     await next();
     return;
   }
