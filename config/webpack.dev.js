@@ -11,17 +11,17 @@ module.exports = {
   },
 
   entry: {
-    main: './lib/main.js'
+    main: './public/main.js'
   },
 
   resolve: {
     extensions: ['.js'],
-    modules: [root('../lib')]
+    modules: [root('../public')]
   },
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'lib/index.html',
+      template: 'public/index.html',
       chunksSortMode: 'dependency',
       inject: 'head'
     })

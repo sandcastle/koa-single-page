@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:8-alpine
 
 ENV NODE_ENV=production
 
@@ -7,4 +7,4 @@ WORKDIR /app
 
 EXPOSE 8002
 
-CMD ["node", "/app/index.js"]
+CMD ["node", "./index.js"]

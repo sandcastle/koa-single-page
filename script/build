@@ -12,7 +12,9 @@ echo "Building ..."
 sh script/clean
 
 mkdir dist
+mkdir dist/public
 cp -Rf src/ dist/src
+cp -Rf public/ dist/public
 cp index.js dist/index.js
 cp package.json dist/package.json
 cp yarn.lock dist/yarn.lock

@@ -1,6 +1,6 @@
 const Config = {
 
-  root: '../../dist',
+  root: '../../public',
 
   get host() {
     return process.env.HOST || '0.0.0.0';
@@ -19,7 +19,7 @@ const Config = {
   },
 
   get staticRoot() {
-    return this.root;
+    return process.env.ASSETS || this.root;
   },
 
   useTestFiles() {
