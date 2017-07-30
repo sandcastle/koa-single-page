@@ -12,10 +12,6 @@ function isNotStaticFile(ctx) {
   return ctx.path.indexOf('.') === -1;
 }
 
-function isIndexPath(ctx) {
-  return ctx.path === RULES.index;
-}
-
 function isInvalidVerb(ctx) {
   return !RULES.allowedVerbs.some(x => x === ctx.method.toUpperCase());
 }
@@ -25,13 +21,6 @@ async function assets(ctx, next) {
   if (isNotStaticFile(ctx)) {
     debug.log(ctx, 'assets : not static file');
     await next();
-    return;
-  }
-
-  if (isIndexPath(ctx)) {
-    debug.log(ctx, 'assets : direct index.html reference');
-    ctx.status = 301;
-    ctx.redirect(RULES.root);
     return;
   }
 
